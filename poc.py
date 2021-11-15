@@ -21,10 +21,9 @@ import argparse
 import logging
 import re
 import os
-from StringIO import StringIO
 import logging
 from colorlog import ColoredFormatter
-from urllib import unquote
+from urllib.parse import unquote
 
 
 def setup_logger():
