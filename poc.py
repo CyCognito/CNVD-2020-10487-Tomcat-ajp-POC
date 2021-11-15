@@ -89,13 +89,12 @@ class Tomcat(object):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.connect((target_host, target_port))
-        self.stream = self.socket.makefile("rb", bufsize=0)
+        self.stream = self.socket.makefile("rb")
 
     def test_password(self, user, password):
         res = False
         stop = False
-        self.forward_request.request_headers['SC_REQ_AUTHORIZATION'] = "Basic " + ("%s:%s" % (user, password)).encode(
-            'base64').replace('\n', '')
+        self.forward_request.request_headers['SC_REQ_AUTHORIZATION'] = "Basic " + ("%s:%s" % (user, password)).encode('base64').replace('\n', '')
         while not stop:
             logger.debug("testing %s:%s" % (user, password))
             responses = self.forward_request.send_and_receive(self.socket, self.stream)
